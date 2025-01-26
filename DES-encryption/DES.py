@@ -23,10 +23,52 @@ class DES:
 
         final_cipher_ascii = DES.binary_to_ascii(final_cipher_str)
         return final_cipher_ascii
+    
+    @staticmethod
+    def decrypt(final_cipher):
+        ip_dec_result_str = DES.ip_on_binary_rep(final_cipher)
+
+        lpt = ip_dec_result_str[:32]
+        rpt = ip_dec_result_str[32:]
+
+        new_lpt, new_rpt = DES.rounds_decryption(lpt, rpt)
+        final_result = new_rpt + new_lpt
+
+        final_cipher = DES.ip_inverse(final_result)
+         # Convert the result back to a string for better visualization
+        final_cipher_str = ''.join(final_cipher)
+        final_cipher_ascii = DES.binary_to_ascii(final_cipher_str)
+        return final_cipher_ascii
+
 
     def ip_inverse(final_result):
         final_cipher = [final_result[ip_inverse_table[i] - 1] for i in range(64)] 
         return final_cipher
+    
+    def rounds_decryption(self, lpt, rpt):
+
+        for round_num in range(16):
+            expanded_result = DES.expasion_permutation(rpt)
+            # Convert the result back to a string for better visualization
+            expanded_result_str = ''.join(expanded_result)
+
+            round_key = self.round_keys[15 - round_num]
+
+            xor_result_str = DES.first_xor(expanded_result_str, round_key)
+
+            s_box_substituted = DES.s_box_substitution(xor_result_str)
+
+            p_box_result = DES.p_box_permutation(s_box_substituted)
+
+            new_rpt = DES.second_xor(lpt, p_box_result) 
+            # Convert the result back to a string for better visualization
+            new_rpt_str = ''.join(new_rpt)
+
+            # Update LPT and RPT for the next round
+            lpt = rpt
+            rpt = new_rpt_str
+
+        return lpt, rpt
         
     def rounds(self, lpt, rpt):
 
