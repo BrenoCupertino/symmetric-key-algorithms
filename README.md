@@ -16,41 +16,6 @@ Uma vez na página inicial você deve clicar em "Remix this app" e logar com sua
 
 ![Imagem de login](./imagens/login.png)
 
- Aqui serão inseridas duas imagens ilustrativas para complementar a explicação.
+Uma vez logado, clique em "Run" para que o código execute.
 
 ![Execução](./imagens/run.png)
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-Uma vez logado, clique em "Run" para que o código execute.\
-Outra imagem aqui
